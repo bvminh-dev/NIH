@@ -1,0 +1,644 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+    "title": "NIH",
+    "version": "v1"
+    },
+    "paths": {
+    "/api/v1/diagnostics/predicts": {
+    "post": {
+    "tags": [
+    "Clinic"
+    ],
+    "summary": "[API CŨ] Predict ảnh từ phía bpro -> api này đã có -> chỉ bổ sung thêm studyId",
+    "requestBody": {
+    "description": "Body của flow cũ, bổ sung thêm field studyID",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/BodyOldDTO"
+    }
+    },
+    "text/json": {
+    "schema": {
+    "$ref": "#/components/schemas/BodyOldDTO"
+    }
+    },
+    "application/*+json": {
+    "schema": {
+    "$ref": "#/components/schemas/BodyOldDTO"
+    }
+    }
+    }
+    },
+    "responses": {
+    "200": {
+    "description": "OK"
+    }
+    }
+    }
+    },
+    "/api/v4/journey": {
+    "post": {
+    "tags": [
+    "Clinic"
+    ],
+    "summary": "Lấy danh sách journey của bệnh nhân khi bác sĩ quét QR, with userType: enum =>  UserBskin = 0, UserBpro = 1 and id of user in qrcode.",
+    "requestBody": {
+    "description": "The request DTO containing the user type.",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/JourneyRequestDTO"
+    }
+    },
+    "text/json": {
+    "schema": {
+    "$ref": "#/components/schemas/JourneyRequestDTO"
+    }
+    },
+    "application/*+json": {
+    "schema": {
+    "$ref": "#/components/schemas/JourneyRequestDTO"
+    }
+    }
+    }
+    },
+    "responses": {
+    "200": {
+    "description": "Return list current journey",
+    "content": {
+    "text/plain": {
+    "schema": {
+    "type": "array",
+    "items": {
+    "$ref": "#/components/schemas/JourneyDTO"
+    }
+    }
+    },
+    "application/json": {
+    "schema": {
+    "type": "array",
+    "items": {
+    "$ref": "#/components/schemas/JourneyDTO"
+    }
+    }
+    },
+    "text/json": {
+    "schema": {
+    "type": "array",
+    "items": {
+    "$ref": "#/components/schemas/JourneyDTO"
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v4/patients/{userId}": {
+    "get": {
+    "tags": [
+    "Clinic"
+    ],
+    "summary": "Lấy detail 1 patient",
+    "parameters": [
+    {
+    "name": "userId",
+    "in": "path",
+    "description": "UserId của bskin",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "format": "uuid"
+    }
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "OK",
+    "content": {
+    "text/plain": {
+    "schema": {
+    "$ref": "#/components/schemas/PatientDetailDTO"
+    }
+    },
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/PatientDetailDTO"
+    }
+    },
+    "text/json": {
+    "schema": {
+    "$ref": "#/components/schemas/PatientDetailDTO"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v4/cases/{caseId}/visits": {
+    "get": {
+    "tags": [
+    "Clinic"
+    ],
+    "summary": "Danh sách visit",
+    "parameters": [
+    {
+    "name": "caseId",
+    "in": "path",
+    "description": "CaseId",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "format": "uuid"
+    }
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "OK",
+    "content": {
+    "text/plain": {
+    "schema": {
+    "type": "array",
+    "items": {
+    "$ref": "#/components/schemas/VisitDTO"
+    }
+    }
+    },
+    "application/json": {
+    "schema": {
+    "type": "array",
+    "items": {
+    "$ref": "#/components/schemas/VisitDTO"
+    }
+    }
+    },
+    "text/json": {
+    "schema": {
+    "type": "array",
+    "items": {
+    "$ref": "#/components/schemas/VisitDTO"
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v4/cases/{caseId}/visits/{visitId}": {
+    "get": {
+    "tags": [
+    "Clinic"
+    ],
+    "summary": "Lấy chi tiết 1 visit",
+    "parameters": [
+    {
+    "name": "caseId",
+    "in": "path",
+    "description": "CaseId",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "format": "uuid"
+    }
+    },
+    {
+    "name": "visitId",
+    "in": "path",
+    "description": "visitId",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "format": "uuid"
+    }
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "OK"
+    }
+    }
+    }
+    },
+    "/api/v1/Scanner/initialize": {
+    "post": {
+    "tags": [
+    "Scanner"
+    ],
+    "summary": "[API CŨ] Tạo 1 scanner -> api này đã có -> trong body bổ sung thêm thông tin studyId, còn lại các flow 1k cũ ko chỉnh sửa gì",
+    "requestBody": {
+    "description": "Body gửi lên",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/InitScannerDTO"
+    }
+    },
+    "text/json": {
+    "schema": {
+    "$ref": "#/components/schemas/InitScannerDTO"
+    }
+    },
+    "application/*+json": {
+    "schema": {
+    "$ref": "#/components/schemas/InitScannerDTO"
+    }
+    }
+    }
+    },
+    "responses": {
+    "200": {
+    "description": "OK",
+    "content": {
+    "text/plain": {
+    "schema": {
+    "type": "string",
+    "format": "uuid"
+    }
+    },
+    "application/json": {
+    "schema": {
+    "type": "string",
+    "format": "uuid"
+    }
+    },
+    "text/json": {
+    "schema": {
+    "type": "string",
+    "format": "uuid"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v2/subject/{id}": {
+    "get": {
+    "tags": [
+    "Study"
+    ],
+    "summary": "Get detail a subject",
+    "parameters": [
+    {
+    "name": "id",
+    "in": "path",
+    "description": "study id",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "format": "uuid"
+    }
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "OK",
+    "content": {
+    "text/plain": {
+    "schema": {
+    "$ref": "#/components/schemas/SubjectDetailDTO"
+    }
+    },
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/SubjectDetailDTO"
+    }
+    },
+    "text/json": {
+    "schema": {
+    "$ref": "#/components/schemas/SubjectDetailDTO"
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "components": {
+    "schemas": {
+    "AppType": {
+    "enum": [
+    1,
+    2,
+    3
+    ],
+    "type": "integer",
+    "description": "BelleHealth = 1, Bskin = 2, BMirror = 3,",
+    "format": "int32"
+    },
+    "AttributeUploadFileDTO": {
+    "type": "object",
+    "properties": {
+    "code": {
+    "type": "string",
+    "nullable": true
+    },
+    "value": {
+    "type": "string",
+    "nullable": true
+    }
+    },
+    "additionalProperties": false
+    },
+    "BodyOldDTO": {
+    "type": "object",
+    "properties": {
+    "studyId": {
+    "type": "string",
+    "description": "studyid",
+    "format": "uuid",
+    "nullable": true
+    },
+    "type": {
+    "$ref": "#/components/schemas/DiagnosticType"
+    },
+    "createDatasetItemInfo": {
+    "$ref": "#/components/schemas/CreateDatasetItemRequestDto"
+    },
+    "diagnosticId": {
+    "type": "string",
+    "description": "DiagnosticId",
+    "format": "uuid",
+    "nullable": true
+    },
+    "isFlag": {
+    "type": "boolean",
+    "description": ""
+    }
+    },
+    "additionalProperties": false,
+    "description": "Body của flow cũ, bổ sung thêm field studyID"
+    },
+    "CreateDatasetItemPartsDto": {
+    "type": "object",
+    "properties": {
+    "partNumber": {
+    "type": "integer",
+    "format": "int32"
+    },
+    "eTag": {
+    "type": "string",
+    "nullable": true
+    }
+    },
+    "additionalProperties": false
+    },
+    "CreateDatasetItemRequestDto": {
+    "type": "object",
+    "properties": {
+    "uploadId": {
+    "type": "string",
+    "description": "",
+    "nullable": true
+    },
+    "s3ObjectKey": {
+    "type": "string",
+    "description": "",
+    "nullable": true
+    },
+    "fileName": {
+    "type": "string",
+    "description": "",
+    "nullable": true
+    },
+    "fileSize": {
+    "type": "string",
+    "description": "",
+    "nullable": true
+    },
+    "duration": {
+    "$ref": "#/components/schemas/DurationType"
+    },
+    "attributes": {
+    "type": "array",
+    "items": {
+    "$ref": "#/components/schemas/AttributeUploadFileDTO"
+    },
+    "nullable": true
+    },
+    "parts": {
+    "type": "array",
+    "items": {
+    "$ref": "#/components/schemas/CreateDatasetItemPartsDto"
+    },
+    "nullable": true
+    }
+    },
+    "additionalProperties": false,
+    "description": ""
+    },
+    "DiagnosticType": {
+    "enum": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+    ],
+    "type": "integer",
+    "format": "int32"
+    },
+    "DurationType": {
+    "enum": [
+    0,
+    1
+    ],
+    "type": "integer",
+    "format": "int32"
+    },
+    "Gender": {
+    "enum": [
+    0,
+    1,
+    2
+    ],
+    "type": "integer",
+    "description": "This is an enumeration that defines the possible values for the Gender property.\r\nThe enumeration has three values: Male=0, Female=1, and Other=2.",
+    "format": "int32"
+    },
+    "InitScannerDTO": {
+    "type": "object",
+    "properties": {
+    "appType": {
+    "$ref": "#/components/schemas/AppType"
+    },
+    "ownerType": {
+    "$ref": "#/components/schemas/OwnerType"
+    },
+    "studyId": {
+    "type": "string",
+    "description": "Bổ sung thêm studyId",
+    "format": "uuid",
+    "nullable": true
+    }
+    },
+    "additionalProperties": false,
+    "description": "Init 1 scanner"
+    },
+    "JourneyDTO": {
+    "type": "object",
+    "properties": {
+    "id": {
+    "type": "string",
+    "description": "The unique identifier of the journey.",
+    "format": "uuid"
+    },
+    "nameJourney": {
+    "type": "string",
+    "description": "The name of the journey.",
+    "nullable": true
+    },
+    "journeyType": {
+    "$ref": "#/components/schemas/JourneyType"
+    }
+    },
+    "additionalProperties": false,
+    "description": "DTO for representing a journey."
+    },
+    "JourneyRequestDTO": {
+    "type": "object",
+    "properties": {
+    "id": {
+    "type": "string",
+    "description": "The unique identifier of the journey.",
+    "format": "uuid"
+    },
+    "userType": {
+    "$ref": "#/components/schemas/UserType"
+    }
+    },
+    "additionalProperties": false,
+    "description": "DTO for requesting a list of journeys."
+    },
+    "JourneyType": {
+    "enum": [
+    0,
+    1
+    ],
+    "type": "integer",
+    "description": "Represents the types of journeys. Clinic = 0, Study = 1,",
+    "format": "int32"
+    },
+    "OwnerType": {
+    "enum": [
+    1,
+    2
+    ],
+    "type": "integer",
+    "description": "User create, Pro = 1, User = 2,",
+    "format": "int32"
+    },
+    "PatientDetailDTO": {
+    "type": "object",
+    "properties": {
+    "id": {
+    "type": "string",
+    "description": "Id",
+    "format": "uuid"
+    },
+    "code": {
+    "type": "string",
+    "description": "code",
+    "nullable": true
+    },
+    "gender": {
+    "$ref": "#/components/schemas/Gender"
+    },
+    "birthday": {
+    "type": "string",
+    "description": "Ngày sinh",
+    "format": "date-time"
+    },
+    "phoneNumber": {
+    "type": "string",
+    "description": "Số điện thoại",
+    "nullable": true
+    },
+    "email": {
+    "type": "string",
+    "description": "Email",
+    "nullable": true
+    },
+    "address": {
+    "type": "string",
+    "description": "Địa chỉ",
+    "nullable": true
+    }
+    },
+    "additionalProperties": false,
+    "description": "Detail 1 patient"
+    },
+    "SubjectDetailDTO": {
+    "type": "object",
+    "properties": {
+    "id": {
+    "type": "string",
+    "description": "Id",
+    "format": "uuid"
+    },
+    "phoneNumber": {
+    "type": "string",
+    "description": "PhoneNumber.",
+    "nullable": true
+    },
+    "email": {
+    "type": "string",
+    "description": "Email",
+    "nullable": true
+    },
+    "address": {
+    "type": "string",
+    "description": "Address",
+    "nullable": true
+    },
+    "birthDay": {
+    "type": "string",
+    "description": "BirthDay",
+    "format": "date-time"
+    },
+    "gender": {
+    "$ref": "#/components/schemas/Gender"
+    }
+    },
+    "additionalProperties": false,
+    "description": "Detail a subject"
+    },
+    "UserType": {
+    "enum": [
+    0,
+    1
+    ],
+    "type": "integer",
+    "description": "Represents the types of users. UserBskin = 0, UserBpro = 1,",
+    "format": "int32"
+    },
+    "VisitDTO": {
+    "type": "object",
+    "properties": {
+    "id": {
+    "type": "string",
+    "description": "Id visit",
+    "format": "uuid"
+    },
+    "createdAt": {
+    "type": "string",
+    "description": "thời gian tạo",
+    "format": "date-time"
+    }
+    },
+    "additionalProperties": false,
+    "description": "Danh sách visit trong case"
+    }
+    }
+    }
+    }
